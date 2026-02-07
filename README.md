@@ -1,7 +1,5 @@
 # python-games
 
-**Requires: Python 3.10 or newer**
-
 A collection of Pygame projects for learning, modification, and exercise. Each game is a complete, standalone project.
 
 ## Games Included
@@ -38,26 +36,36 @@ A collection of Pygame projects for learning, modification, and exercise. Each g
 
 ## Running Games Locally
 
-**Prerequisites**: Python 3.10+ and pygame
+### Requirements
+- **Python 3.10+**
+- **uv** (Python & dependency manager)
 
-> Note: some games use Python 3.10+ features (PEP 604 union types `X | Y`, `match` statement). Use Python 3.10 or newer to avoid syntax/runtime errors.
+> Some games use Python 3.10+ features (PEP 604 union types `X | Y`, `match` statement).  
+> Using Python 3.10 or newer is required to avoid syntax or runtime errors.
 
-### Install Dependencies
+
+## Setup (Recommended: `uv`)
+
+### 1. Install `uv`
 ```bash
-# macOS / Linux: create and activate a venv, then install
-python3 -m venv .venv
+brew install uv
+```
+(Windows / Linux: see https://github.com/astral-sh/uv)
+
+### 2. Use Python 3.10+
+
+From the repo root:
+```bash
+uv python install 3.10
+uv python pin 3.10
+uv venv
 source .venv/bin/activate
-pip install -U pip
-pip install -r requirements.txt
+```
+This ensures the project always uses Python 3.10+ and you are using a virtual environment.
 
-# Windows (PowerShell): create and activate a venv, then install
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -U pip
-pip install -r requirements.txt
-
-# Optional: use Poetry for dependency management
-# poetry install
+### 3. Install Dependencies
+```bash
+uv pip install -r requirements.txt
 ```
 
 > Note: a Docker image is an isolated environment so a local venv is not required when running via Docker.
@@ -80,8 +88,8 @@ cd tetris-game && python3 main.py
 # Super Mario
 cd mario-game && python3 main.py
 
-# Mario Kart (if running from repo root, ensure working dir points to mario-kart-game sprites)
-# cd mario-kart-game && python3 MarioKart.pyw
+# Mario Kart 
+cd mario-kart-game && python3 MarioKart.pyw
 ```
 
 ## Running in Docker
