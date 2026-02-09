@@ -25,24 +25,30 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Create a startup script to handle game selection
 RUN cat > /app/start_game.sh <<'SCRIPT'
 #!/bin/bash
+set -e
 
 GAME=${GAME:-ninja}
 
 case "$GAME" in
   ninja)
-    python3 ninja-game/app.py
+    cd /app/ninja-game
+    python app.py
     ;;
   pacman)
-    python3 pacman-game/main.py
+    cd /app/pacman-game
+    python main.py
     ;;
   tetris)
-    python3 tetris-game/main.py
+    cd /app/tetris-game
+    python main.py
     ;;
   mario)
-    python3 mario-game/main.py
+    cd /app/mario-game
+    python main.py
     ;;
   mariokart)
-    python3 mario-kart-game/MarioKart.pyw
+    cd /app/mario-kart-game
+    python MarioKart.pyw
     ;;
   *)
     echo "Unknown game: $GAME"

@@ -99,33 +99,43 @@ cd mario-kart-game && python3 MarioKart.pyw
 docker build -t python-games .
 ```
 
-### Run a Game in Docker (Linux/Mac with Display Support)
+###  Run a Game in Docker (via Browser / noVNC)
 
 Each game runs in its own container. Select which game to play using the `GAME` environment variable. Default is `ninja` if not specified.
 
 ```bash
-# Ninja Game
-docker run --rm -e GAME=ninja -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix python-games
+# Ninja (default)
+docker run --rm -p 6080:6080 -e GAME=ninja python-games
 
 # Pac-Man
-docker run --rm -e GAME=pacman -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix python-games
+docker run --rm -p 6080:6080 -e GAME=pacman python-games
 
 # Tetris
-docker run --rm -e GAME=tetris -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix python-games
+docker run --rm -p 6080:6080 -e GAME=tetris python-games
 
 # Super Mario
-docker run --rm -e GAME=mario -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix python-games
+docker run --rm -p 6080:6080 -e GAME=mario python-games
 
 # Mario Kart
-docker run --rm -e GAME=mariokart -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix python-games
-
-# Default (Ninja)
-docker run --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix python-games
+docker run --rm -p 6080:6080 -e GAME=mariokart python-games
 ```
 
 ### Docker Run Explanation
 
 - `--rm`: automatically remove container when it exits
 - `-e GAME=<game_name>`: Selects which game to play
-- `-e DISPLAY=$DISPLAY`: Forwards your display to the container
-- `-v /tmp/.X11-unix:/tmp/.X11-unix`: Mounts the X11 socket for display forwarding
+
+### How Graphics Work in Docker (noVNC)
+
+When running games in Docker, a normal desktop window cannot be opened directly.
+Instead, this project uses:
+
+- Xvfb (virtual X server)
+- x11vnc (VNC server)
+- noVNC (browser-based VNC client)
+
+This allows the game window to be accessed directly from your browser.
+> Note: Rendering through VNC/noVNC is slower than native execution.
+> This setup is intended for testing, demos, and learning — not high-performance gameplay.
+
+
